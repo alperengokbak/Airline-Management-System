@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: API Project For An Airline Company
+  description: API for display available ticket, buy and cancel ticket.
+  version: 1.0.0
+paths:
+  /auth/login:
+    post:
+      summary: Login to the application
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              example:
+                status: Success
+                passenger:
+                  passengerId: 1
+                  username: john_doe
+                  fullName: John Doe
+                accessToken: <your-access-token>
+        "400":
+          description: Incorrect username or password
+          content:
+            application/json:
+              example:
+                error: Incorrect username or password
+
+  /auth/register:
+    post:
+      summary: Register a new user
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                fullName:
+                  type: string
+      responses:
+        "200":
+          description: Registration successful
+          content:
+            application/json:
+              example:
+                status: Success
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error: Internal Server Error
+
+  /ticket:
+    get:
+      summary: Display available tickets
+      tags:
+        - Ticket
+      parameters:
+        - name: date
+          in: query
+          description: Date of the flight
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: fromLocation
+          in: query
+          description: Departure location
+          required: true
+          schema:
+            type: string
+        - name: toLocation
+          in: query
+          description: Destination location
+          required: true
+          schema:
+            type: string
+        - name: numberOfPeople
+          in: query
+          description: Number of people
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                - FlightId: 1
+                  Date: "2023-12-01"
+                  FlightNumber: "ABC123"
+                  Price: 100.00
+                  AvailableSeats: 50
+
+  /ticket/buyticket:
+    post:
+      summary: Buy a ticket
+      tags:
+        - Ticket
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                fromLocation:
+                  type: string
+                toLocation:
+                  type: string
+                fullName:
+                  type: string
+      responses:
+        "200":
+          description: Successful purchase
+          content:
+            application/json:
+              example:
+                status: Success
+        "400":
+          description: No seats available
+          content:
+            application/json:
+              example:
+                error: No seats available
+        "409":
+          description: Ticket already purchased
+          content:
+            application/json:
+              example:
+                error: You already bought the ticket in advance!
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error: Internal Server Error
+
+  /ticket/cancelticket:
+    delete:
+      summary: Cancel a ticket
+      tags:
+        - Ticket
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                flightNumber:
+                  type: string
+                passengerId:
+                  type: integer
+      responses:
+        "200":
+          description: Successful cancellation
+          content:
+            application/json:
+              example:
+                status: Success
+        "404":
+          description: Ticket not found
+          content:
+            application/json:
+              example:
+                error: Ticket not found
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error: Internal Server Error
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
