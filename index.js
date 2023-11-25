@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
-const swaggerDocument = YAML.parse(fs.readFileSync("/Users/alperengokbak/vsCode/se4458-Midterm/swagger.yaml", "utf8"));
+const swaggerDocument = YAML.parse(fs.readFileSync("./swagger.yaml", "utf8"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", authRoute);
 app.use("/ticket", ticketRoute);
