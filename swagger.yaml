@@ -2,7 +2,9 @@ openapi: 3.0.0
 info:
   title: API Project For An Airline Company
   description: API for display available ticket, buy and cancel ticket.
-  version: 1.0.0
+  version: 1.0.0,
+servers:
+  - url: https://airlinemanagmentsystem.azurewebsites.net/
 paths:
   /auth/login:
     post:
