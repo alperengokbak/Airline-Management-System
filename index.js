@@ -10,20 +10,18 @@ import fs from "fs";
 import authRoute from "./src/routes/authRoute.js";
 import ticketRoute from "./src/routes/ticketRoute.js";
 
-// Import body-parser and cors
-import bodyParser from "body-parser";
+// Import cors
 import cors from "cors";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 4000;
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
-const swaggerDocument = YAML.parse(fs.readFileSync("./swagger.yaml", "utf8"));
+const swaggerDocument = YAML.parse(fs.readFileSync("./swagger.yml", "utf8"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use("/auth", authRoute);
 app.use("/ticket", ticketRoute);
 

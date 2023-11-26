@@ -4,13 +4,28 @@ import sql from "msnodesqlv8";
 // Import the connection string.
 import { connectionString } from "../db/dbConfig.js";
 
-export const displayTicket = async (req, res) => {
-  const { date, fromLocation, toLocation, numberOfPeople } = req.body;
-
-  const query = `SELECT FlightId, Date, FlightNumber, Price, AvailableSeats FROM  Flights WHERE Date = '${date}' AND FromLocation = '${fromLocation}' AND ToLocation = '${toLocation}' AND AvailableSeats >= '${numberOfPeople}' ORDER BY Date OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY`;
+export const displayAllFlights = async (req, res) => {
+  const query = `SELECT * FROM  Flights ORDER BY Date`;
 
   sql.query(connectionString, query, (error, results) => {
-    if (error) throw error;
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+    return res.status(200).json(results);
+  });
+};
+
+export const displayTicket = async (req, res) => {
+  const { date, fromLocation, toLocation, numberOfPeople } = req.params;
+
+  const query = `SELECT FlightId, Date, FlightNumber, Price, AvailableSeats FROM  Flights WHERE Date = ? AND FromLocation = ? AND ToLocation = ? AND AvailableSeats >= ? ORDER BY Date OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY`;
+
+  sql.query(connectionString, query, [date, fromLocation, toLocation, numberOfPeople], (error, results) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
     console.log(results);
     return res.status(200).json(results);
   });

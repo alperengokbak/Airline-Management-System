@@ -1,10 +1,18 @@
-openapi: 3.0.0
+openapi: 3.0.2
 info:
   title: API Project For An Airline Company
   description: API for display available ticket, buy and cancel ticket.
-  version: 1.0.0,
+  version: 1.0.0
 servers:
+  - url: http://localhost:3000
+    description: Local server
   - url: https://airlinemanagmentsystem.azurewebsites.net/
+    description: Production server
+tags:
+  - name: Authentication
+    description: Authentication
+  - name: Ticket
+    description: Ticket
 paths:
   /auth/login:
     post:
@@ -73,48 +81,92 @@ paths:
               example:
                 error: Internal Server Error
 
-  /ticket:
+  /ticket/flights:
     get:
-      summary: Display available tickets
+      summary: Get all flights
+      tags:
+        - Ticket
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ticket"
+                  example:
+                    - FlightId: 1
+                      Date: "2023-12-01"
+                      FlightNumber: "ABC123"
+                      Price: 100.00
+                      AvailableSeats: 50
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error: Internal Server Error
+
+  /ticket/{date}/{fromLocation}/{toLocation}/{numberOfPeople}:
+    get:
+      summary: Get all available tickets
       tags:
         - Ticket
       parameters:
         - name: date
-          in: query
-          description: Date of the flight
+          in: path
+          description: The date of the flight
           required: true
           schema:
             type: string
             format: date
         - name: fromLocation
-          in: query
+          in: path
           description: Departure location
           required: true
           schema:
             type: string
         - name: toLocation
-          in: query
+          in: path
           description: Destination location
           required: true
           schema:
             type: string
         - name: numberOfPeople
-          in: query
-          description: Number of people
+          in: path
+          description: The number of people that will travel
           required: true
           schema:
             type: integer
+
       responses:
         "200":
-          description: Successful response
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ticket"
+                  example:
+                    - FlightId: 1
+                      Date: "2023-12-01"
+                      FlightNumber: "ABC123"
+                      Price: 100.00
+                      AvailableSeats: 50
+        "400":
+          description: Bad request
           content:
             application/json:
               example:
-                - FlightId: 1
-                  Date: "2023-12-01"
-                  FlightNumber: "ABC123"
-                  Price: 100.00
-                  AvailableSeats: 50
+                error: Bad request
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error: Internal Server Error
 
   /ticket/buyticket:
     post:
@@ -207,3 +259,46 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Ticket:
+      type: object
+      required:
+        - date
+        - fromLocation
+        - toLocation
+        - numberOfPeople
+      properties:
+        date:
+          type: string
+          format: date
+          description: The date of the flight
+        fromLocation:
+          type: string
+          description: The location of the flight
+        toLocation:
+          type: string
+          description: The destination of the flight
+        numberOfPeople:
+          type: integer
+          description: The number of people that will travel
+      example:
+        date: 2021-05-20
+        fromLocation: London
+        toLocation: Paris
+        numberOfPeople: 2
+    Passenger:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          description: The username of the passenger
+        password:
+          type: string
+          description: The password of the passenger
+      example:
+        username: john_doe
+        password: 12345
