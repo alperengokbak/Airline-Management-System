@@ -1,6 +1,7 @@
 // Import express and swaggerUi
 import express from "express";
 import swaggerUi from "swagger-ui-express";
+import http from "http";
 
 // Import YAML file
 import YAML from "yamljs";
@@ -18,6 +19,7 @@ const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(cors());
+const server = http.createServer(app);
 
 const swaggerDocument = YAML.parse(fs.readFileSync("./swagger.yml", "utf8"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -25,4 +27,5 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", authRoute);
 app.use("/ticket", ticketRoute);
 
-app.listen(port, () => console.log(`App listening on port ${port}`));
+/* app.listen(port, () => console.log(`App listening on port ${port}`)); */
+server.listen(port, () => console.log(`App running on port ${port}`));
