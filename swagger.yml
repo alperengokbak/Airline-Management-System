@@ -81,6 +81,31 @@ paths:
               example:
                 error: Internal Server Error
 
+  /auth/passengers:
+    get:
+      summary: Get all passengers
+      tags:
+        - Authentication
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Passenger"
+                  example:
+                    - PassengerId: 1
+                      Username: john_doe
+                      FullName: John Doe
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error: Internal Server Error
+
   /ticket/flights:
     get:
       summary: Get all flights
@@ -110,7 +135,7 @@ paths:
 
   /ticket/{date}/{fromLocation}/{toLocation}/{numberOfPeople}:
     get:
-      summary: Get all available tickets
+      summary: Get the defined available tickets.(Don't use "" in the text fields)
       tags:
         - Ticket
       parameters:
@@ -152,9 +177,9 @@ paths:
                   example:
                     - FlightId: 1
                       Date: "2023-12-01"
-                      FlightNumber: "ABC123"
-                      Price: 100.00
-                      AvailableSeats: 50
+                      FlightNumber: "AA123"
+                      Price: 350.00
+                      AvailableSeats: 149
         "400":
           description: Bad request
           content:
@@ -283,16 +308,20 @@ components:
           type: integer
           description: The number of people that will travel
       example:
-        date: 2021-05-20
-        fromLocation: London
-        toLocation: Paris
+        date: 2023-12-01
+        fromLocation: New York
+        toLocation: Los Angeles
         numberOfPeople: 2
     Passenger:
       type: object
       required:
+        - fullName
         - username
         - password
       properties:
+        fullName:
+          type: string
+          description: The full name of the passenger
         username:
           type: string
           description: The username of the passenger
@@ -300,5 +329,5 @@ components:
           type: string
           description: The password of the passenger
       example:
-        username: john_doe
+        username: test
         password: 12345

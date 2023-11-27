@@ -59,3 +59,13 @@ export const register = async (req, res) => {
     });
   });
 };
+
+export const getAllPassengers = async (req, res) => {
+  const query = `SELECT * FROM Passenger`;
+
+  sql.query(connectionString, query, (error, results) => {
+    if (error) throw error;
+
+    return res.status(200).json(results);
+  });
+};
