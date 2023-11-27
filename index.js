@@ -11,6 +11,10 @@ import fs from "fs";
 import authRoute from "./src/routes/authRoute.js";
 import ticketRoute from "./src/routes/ticketRoute.js";
 
+// Import Application Insights
+import appInsights from "applicationinsights";
+appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY).start();
+
 // Import cors
 import cors from "cors";
 

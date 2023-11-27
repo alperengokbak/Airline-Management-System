@@ -4,7 +4,7 @@ info:
   description: API for display available ticket, buy and cancel ticket.
   version: 1.0.0
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:8080
     description: Local server
   - url: https://airlinemanagmentsystem.azurewebsites.net/
     description: Production server
