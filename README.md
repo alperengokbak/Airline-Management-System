@@ -98,18 +98,20 @@ Endpoint to register a new user.
 
 ### Ticket
 
-#### `GET /ticket/:date/:fromLocation/:toLocation/:numberOfPeople`
+#### `POST /ticket`
 
 Endpoint to display available tickets.
 
 ##### Request:
 
-URL Parameters:
-
-- `date`: Date of the flight
-- `fromLocation`: Departure location
-- `toLocation`: Destination location
-- `numberOfPeople`: Number of people
+```json
+{
+  "date": "newuser",
+  "fromLocation": "newpassword",
+  "toLocation": "New User",
+  "numberOfPeopl": 1
+}
+```
 
 ##### Response:
 
