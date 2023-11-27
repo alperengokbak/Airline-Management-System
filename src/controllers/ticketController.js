@@ -17,7 +17,9 @@ export const displayAllFlights = async (req, res) => {
 };
 
 export const displayTicket = async (req, res) => {
-  const { date, fromLocation, toLocation, numberOfPeople } = req.params;
+  const { date, fromLocation, toLocation, numberOfPeople } = req.body;
+
+  if (numberOfPeople < 1) return res.status(400).json({ error: "Number of people must be greater than 0" });
 
   const query = `SELECT FlightId, Date, FlightNumber, Price, AvailableSeats FROM  Flights WHERE Date = ? AND FromLocation = ? AND ToLocation = ? AND AvailableSeats >= ? ORDER BY Date OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY`;
 

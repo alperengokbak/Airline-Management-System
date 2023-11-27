@@ -133,37 +133,27 @@ paths:
               example:
                 error: Internal Server Error
 
-  /ticket/{date}/{fromLocation}/{toLocation}/{numberOfPeople}:
-    get:
-      summary: Get the defined available tickets.(Don't use "" in the text fields)
+  /ticket:
+    post:
+      summary: Get the defined available tickets.
       tags:
         - Ticket
-      parameters:
-        - name: date
-          in: path
-          description: The date of the flight
-          required: true
-          schema:
-            type: string
-            format: date
-        - name: fromLocation
-          in: path
-          description: Departure location
-          required: true
-          schema:
-            type: string
-        - name: toLocation
-          in: path
-          description: Destination location
-          required: true
-          schema:
-            type: string
-        - name: numberOfPeople
-          in: path
-          description: The number of people that will travel
-          required: true
-          schema:
-            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                fromLocation:
+                  type: string
+                toLocation:
+                  type: string
+                numberOfPeople:
+                  type: integer
 
       responses:
         "200":
@@ -308,10 +298,12 @@ components:
           type: integer
           description: The number of people that will travel
       example:
-        date: 2023-12-01
-        fromLocation: New York
-        toLocation: Los Angeles
-        numberOfPeople: 2
+        FlightId: 1,
+        Date: "2023-12-01T00:00:00.000Z"
+        FlightNumber: "AA123"
+        Price: 350,
+        AvailableSeats: 148
+
     Passenger:
       type: object
       required:

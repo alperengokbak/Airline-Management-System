@@ -12,6 +12,9 @@ dotenv.config();
 const router = Router();
 
 const verifyToken = (req, res, next) => {
+  if (!req.header("Authorization")) {
+    return res.status(401).json({ status: "Unauthorized" });
+  }
   const token = req.header("Authorization").split(" ")[1];
   if (!token) return res.status(401).json({ error: "Unauthorized" });
 
@@ -21,7 +24,8 @@ const verifyToken = (req, res, next) => {
     next();
   });
 };
-router.get("/:date/:fromLocation/:toLocation/:numberOfPeople", displayTicket);
+
+router.post("/", displayTicket);
 router.get("/flights", displayAllFlights);
 router.post("/buyticket", verifyToken, buyTicket);
 router.delete("/cancelticket", verifyToken, cancelTicket);
