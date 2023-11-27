@@ -27,7 +27,7 @@ export const login = (req, res) => {
 
       if (result) {
         const accessToken = jwt.sign({ username: user.Username }, process.env.SECRET_KEY, {
-          expiresIn: "7d",
+          expiresIn: "30d",
         });
 
         return res.status(200).json({
