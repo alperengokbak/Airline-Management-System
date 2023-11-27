@@ -55,8 +55,8 @@ Endpoint to authenticate a user.
 
 ```json
 {
-  "username": "example",
-  "password": "password123"
+  "username": "test",
+  "password": "12345"
 }
 ```
 
@@ -66,9 +66,9 @@ Endpoint to authenticate a user.
 {
   "status": "Success",
   "passenger": {
-    "passengerId": 1,
-    "username": "example",
-    "fullName": "John Doe"
+    "passengerId": 4,
+    "username": "test",
+    "fullName": "test test"
   },
   "accessToken": "your-access-token"
 }
@@ -106,10 +106,10 @@ Endpoint to display available tickets.
 
 ```json
 {
-  "date": "newuser",
-  "fromLocation": "newpassword",
-  "toLocation": "New User",
-  "numberOfPeopl": 1
+  "date": "2023-12-01",
+  "fromLocation": "New York",
+  "toLocation": "Los Angeles",
+  "numberOfPeople": 1
 }
 ```
 
@@ -124,7 +124,6 @@ Endpoint to display available tickets.
     "Price": 100,
     "AvailableSeats": 50
   }
-  // More flights...
 ]
 ```
 
@@ -143,7 +142,6 @@ Endpoint to display all flights.
     "Price": 100,
     "AvailableSeats": 50
   }
-  // More flights...
 ]
 ```
 
