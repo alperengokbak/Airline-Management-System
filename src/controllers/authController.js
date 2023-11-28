@@ -13,6 +13,7 @@ dotenv.config();
 import { connectionString } from "../db/dbConfig.js";
 
 export const login = (req, res) => {
+  // Execute a SQL query to select all records from the Passenger table.
   sql.query(connectionString, "SELECT * FROM Passenger", (error, results) => {
     if (error) throw error;
 
@@ -22,14 +23,17 @@ export const login = (req, res) => {
       return res.status(400).json({ error: "User not found" });
     }
 
+    // Compare the provided password with the hashed password stored in the database.
     bcrypt.compare(req.body.password, user.Password, (err, result) => {
       if (err) throw err;
 
+      // If the password is correct, generate an access token using JWT.
       if (result) {
         const accessToken = jwt.sign({ username: user.Username }, process.env.SECRET_KEY, {
           expiresIn: "30d",
         });
 
+        // Return a success response with user details and the access token.
         return res.status(200).json({
           status: "Success",
           passenger: {

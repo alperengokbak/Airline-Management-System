@@ -17,13 +17,16 @@ appInsights.setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING).start();
 // Import cors
 import cors from "cors";
 
-const app = express();
+const app = express(); // Create an express application
 const port = process.env.PORT;
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json()); // Use JSON parsing middleware for incoming requests
+app.use(cors()); // Enable CORS (Cross-Origin Resource Sharing) for the application
 
+// Parse the Swagger YAML document into a JavaScript object
 const swaggerDocument = YAML.parse(fs.readFileSync("./swagger.yml", "utf8"));
+
+// Serve Swagger UI at "/api-docs" and set up Swagger UI with the parsed YAML document
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/auth", authRoute);
