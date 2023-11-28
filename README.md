@@ -89,24 +89,15 @@ DATABASE_CONNECTION_STRING=your_database_connection_string
 The project is structured as follows:
 
 ```bash
-.
+.src
 ├── controllers
 │   ├── authController.js
 │   └── ticketController.js
-├── database
-│   └── database.js
-├── models
-│   ├── auth.js
-│   └── ticket.js
-├── public
-│   └── ER Diagram.png
+├── db
+│   └── dbConfig.js
 ├── routes
-│   ├── auth.js
-│   └── ticket.js
-├── app.js
-├── package-lock.json
-├── package.json
-└── README.md
+│   ├── authRoute.js
+│   └── ticketRoute.js
 ```
 
 ## Source Code Examples
