@@ -17,6 +17,15 @@ The project appears to be a web application built using Node.js and Express, wit
   - [Ticket](#ticket)
 - [Interactions with the Application](#interactions-with-the-application)
 - [Database](#database)
+  - [Passenger Table](#passenger-table)
+  - [Flights Table](#flights-table)
+  - [Tickets Table](#tickets-table)
+- [Example Interaction Flow](#example-interaction-flow)
+  - [User Registration](#user-registration)
+  - [User Login](#user-login)
+  - [Booking a Ticket](#booking-a-ticket)
+  - [Canceling a Ticket](#canceling-a-ticket)
+- [Database Schema (ER Diagram)](#database-schema-er-diagram)
 - [Dependencies](#dependencies)
 
 ## Introduction
