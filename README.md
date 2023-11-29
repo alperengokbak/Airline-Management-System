@@ -58,10 +58,17 @@ In summary, the project serves as a comprehensive solution for individuals seeki
 
 ## Installation
 
-Describe the steps to set up and run your project locally. Include any dependencies that need to be installed and how to do so.
+To set up and run this project locally, follow these steps:
+
+### Prerequisites
+
+Make sure you have the following tools installed on your machine:
+
+- [Node.js](https://nodejs.org/): Ensure you have Node.js installed (version 14 or higher).
+
+### Clone the Repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/alperengokbak/Airline-Management-System
 
 # Navigate to the project directory
@@ -80,8 +87,11 @@ Create a .env file in the project root.
 Define the following variables in the .env file:
 
 ```env
+PORT=3000
 SECRET_KEY=your_secret_key
+APPLICATIONINSIGHTS_CONNECTION_STRING=your_application_insights_connection_string
 DATABASE_CONNECTION_STRING=your_database_connection_string
+# Add other environment variables as needed
 ```
 
 ## Project Structure
